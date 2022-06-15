@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form th:action th:object="${form}" method="post">
+        <div>
+            <label for="url">URL</label>
+            <input type="text" th:field="*{url}" th:errorClass="field-error" class="form-control">
+            <div class="field-error" th:errors="*{url}">URL 오류</div>
+        </div>
+
+        <div>
+            <div>Type</div>
+            <select th:field="*{type}" class="form-select">
+                <option th:each="searchType : ${searchTypes}" th:value="${searchType.name()}"
+                        th:text="${searchType.description}">FAST</option>
+            </select>
+        </div>
+        <div>
+            <label for="bundleUnit">출력묶음단위(자연수)</label>
+            <input type="text" th:field="*{bundleUnit}" th:errorClass="field-rror" class="form-control">
+            <div class="field-error" th:errors="*{bundleUnit}">출력묶음단위 오류</div>
+        </div>
+
+        <hr class="my-4">
+
+        <div>
+            몫 : <p th:if="${result}" th:text="${result.quotient}"></p>
+            나머지 : <p th:if="${result}" th:text="${result.remainder}"></p>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">출력</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
